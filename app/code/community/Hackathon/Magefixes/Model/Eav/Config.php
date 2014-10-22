@@ -272,7 +272,9 @@ class Hackathon_Magefixes_Model_Eav_Config extends Mage_Eav_Model_Config
         $attributeCode = $attributeData['attribute_code'];
         $attribute = Mage::getModel($model)->setData($attributeData);
         $entity = $entityType->getEntity();
-        if ($entity && true === in_array($attributeCode, $entity->getDefaultAttributes())) {
+        if ($entity &&
+            true === method_exists($entity,'getDefaultAttributes') &&
+            true === in_array($attributeCode, $entity->getDefaultAttributes())) {
             $attribute->setBackendType(Mage_Eav_Model_Entity_Attribute_Abstract::TYPE_STATIC)->setIsGlobal(true);
         }
 
